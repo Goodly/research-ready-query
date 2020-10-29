@@ -22,7 +22,7 @@ SELECT DISTINCT state_name FROM constituency_list;
 
 
 -- create constituency_list_normalized view helper
--- DROP VIEW IF EXISTS constituency_list_normalized_view;
+DROP VIEW IF EXISTS constituency_list_normalized_view;
 DROP TABLE IF EXISTS constituency_list_normalized_view;
 
 CREATE TABLE constituency_list_normalized_view as
@@ -42,7 +42,7 @@ ON constituency_list_normalized_view(state_id, district_number);
 --- JF commetned out: SELECT * FROM constituency_list_normalized_view;
 
 -- create overall data view
---DROP VIEW IF EXISTS advance_data_view;
+DROP VIEW IF EXISTS advance_data_view;
 DROP TABLE IF EXISTS advance_data_view;
 
 -- want columns:
@@ -70,7 +70,7 @@ state_name,
 district_number,
 speaker_list.party_id,
 party_name,
-chamber_id,
+speaker_list.chamber_id,
 chamber_name,
 speaker_list.congress_id
 FROM speech_list
