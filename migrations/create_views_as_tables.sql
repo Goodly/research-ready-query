@@ -1,5 +1,5 @@
 -- create person_list VIEW
-DROP VIEW IF EXISTS person_list_view;
+-- DROP VIEW IF EXISTS person_list_view;
 DROP TABLE IF EXISTS person_list_view;
 
 CREATE TABLE person_list_view as
@@ -11,16 +11,25 @@ CREATE INDEX IF NOT EXISTS pl_idx_display_name
 ON person_list_view(display_name);
 
 
+-- create state list
+DROP TABLE IF EXISTS state_list;
+
+CREATE TABLE state_list(state_id integer primary key AUTOINCREMENT
+                , state_name varchar(100));
+               
+INSERT INTO state_list (state_name)
+SELECT DISTINCT state_name FROM constituency_list;
+
 
 -- create constituency_list_normalized view helper
-DROP VIEW IF EXISTS constituency_list_normalized_view;
+-- DROP VIEW IF EXISTS constituency_list_normalized_view;
 DROP TABLE IF EXISTS constituency_list_normalized_view;
 
 CREATE TABLE constituency_list_normalized_view as
-SELECT constituency_list_normalized.constituency_id,constituency_list_normalized.state_id,state_name,constituency_list_normalized.district_id,district_number
-FROM constituency_list_normalized
-INNER JOIN states_list on states_list.state_id = constituency_list_normalized.state_id
-INNER JOIN district_list on district_list.district_id = constituency_list_normalized.district_id;
+SELECT cl.constituency_id, sl.state_id,cl.state_name,cl.district_number
+FROM constituency_list cl
+Join state_list sl
+ON cl.state_name  = sl.state_name;
 
 CREATE INDEX IF NOT EXISTS cl_idx_state_id
 ON constituency_list_normalized_view(state_id);
@@ -33,7 +42,7 @@ ON constituency_list_normalized_view(state_id, district_number);
 --- JF commetned out: SELECT * FROM constituency_list_normalized_view;
 
 -- create overall data view
-DROP VIEW IF EXISTS advance_data_view;
+--DROP VIEW IF EXISTS advance_data_view;
 DROP TABLE IF EXISTS advance_data_view;
 
 -- want columns:
@@ -58,7 +67,6 @@ display_name,
 constituency_list_normalized_view.constituency_id,
 constituency_list_normalized_view.state_id,
 state_name,
-constituency_list_normalized_view.district_id,
 district_number,
 speaker_list.party_id,
 party_name
@@ -91,4 +99,3 @@ ON advance_data_view(state_id);
 
 CREATE INDEX IF NOT EXISTS adv_idx_district_id
 ON advance_data_view(state_id, district_number);
-
