@@ -126,3 +126,5 @@ DROP TABLE IF EXISTS speech_proceeding;
 DROP TABLE IF EXISTS state_list;
 DROP TABLE IF EXISTS witness_list;
 DROP TABLE IF EXISTS zip_code_list;
+
+VACUUM;
