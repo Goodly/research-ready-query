@@ -12,12 +12,12 @@ ON person_list_view(display_name);
 
 
 -- create state list
-DROP TABLE IF EXISTS state_list;
+DROP TABLE IF EXISTS states_list;
 
-CREATE TABLE state_list(state_id integer primary key AUTOINCREMENT
+CREATE TABLE states_list(state_id integer primary key AUTOINCREMENT
                 , state_name varchar(100));
                
-INSERT INTO state_list (state_name)
+INSERT INTO states_list (state_name)
 SELECT DISTINCT state_name FROM constituency_list;
 
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS constituency_list_normalized_view;
 CREATE TABLE constituency_list_normalized_view as
 SELECT cl.constituency_id, sl.state_id,cl.state_name,cl.district_number
 FROM constituency_list cl
-Join state_list sl
+Join states_list sl
 ON cl.state_name  = sl.state_name;
 
 CREATE INDEX IF NOT EXISTS cl_idx_state_id
@@ -105,26 +105,27 @@ ON advance_data_view(state_id, district_number);
 
 -- removing tables that are no longer need for this app
 DROP TABLE IF EXISTS speech_list;
-DROP TABLE IF EXISTS constituency_list;
-DROP TABLE IF EXISTS hearing_list;
-DROP TABLE IF EXISTS chamber_list;
-DROP TABLE IF EXISTS committee_list;
-DROP TABLE IF EXISTS congress_list;
-DROP TABLE IF EXISTS constituency_characteristics;
-DROP TABLE IF EXISTS hearing_list;
-DROP TABLE IF EXISTS hearing_person;
-DROP TABLE IF EXISTS hearing_speech;
-DROP TABLE IF EXISTS legislation_list;
-DROP TABLE IF EXISTS legislation_speech;
-DROP TABLE IF EXISTS legislation_type_list;
-DROP TABLE IF EXISTS occasion_list;
-DROP TABLE IF EXISTS party_list;
-DROP TABLE IF EXISTS person_list;
-DROP TABLE IF EXISTS person_role_list;
-DROP TABLE IF EXISTS speaker_list;
-DROP TABLE IF EXISTS speech_proceeding;
-DROP TABLE IF EXISTS state_list;
-DROP TABLE IF EXISTS witness_list;
-DROP TABLE IF EXISTS zip_code_list;
+                                     
+-- These could go, too, but I don't want to risk throwing off a query now.                                     
+-- DROP TABLE IF EXISTS constituency_list;
+-- DROP TABLE IF EXISTS hearing_list;
+-- DROP TABLE IF EXISTS chamber_list;
+-- DROP TABLE IF EXISTS committee_list;
+-- DROP TABLE IF EXISTS congress_list;
+-- DROP TABLE IF EXISTS constituency_characteristics;
+-- DROP TABLE IF EXISTS hearing_list;
+-- DROP TABLE IF EXISTS hearing_person;
+-- DROP TABLE IF EXISTS hearing_speech;
+-- DROP TABLE IF EXISTS legislation_list;
+-- DROP TABLE IF EXISTS legislation_speech;
+-- DROP TABLE IF EXISTS legislation_type_list;
+-- DROP TABLE IF EXISTS occasion_list;
+-- DROP TABLE IF EXISTS party_list;
+-- DROP TABLE IF EXISTS person_list;
+-- DROP TABLE IF EXISTS person_role_list;
+-- DROP TABLE IF EXISTS speaker_list;
+-- DROP TABLE IF EXISTS speech_proceeding;
+-- DROP TABLE IF EXISTS witness_list;
+-- DROP TABLE IF EXISTS zip_code_list;
 
 VACUUM;
