@@ -69,7 +69,10 @@ constituency_list_normalized_view.state_id,
 state_name,
 district_number,
 speaker_list.party_id,
-party_name
+party_name,
+chamber_id,
+chamber_name,
+speaker_list.congress_id
 FROM speech_list
 INNER JOIN speaker_list on speaker_list.speaker_id = speech_list.speaker_id
 INNER JOIN person_list on person_list.person_id = speaker_list.person_id
@@ -99,3 +102,27 @@ ON advance_data_view(state_id);
 
 CREATE INDEX IF NOT EXISTS adv_idx_district_id
 ON advance_data_view(state_id, district_number);
+
+-- removing tables that are no longer need for this app
+DROP TABLE IF EXISTS speech_list;
+DROP TABLE IF EXISTS constituency_list;
+DROP TABLE IF EXISTS hearing_list;
+DROP TABLE IF EXISTS chamber_list;
+DROP TABLE IF EXISTS committee_list;
+DROP TABLE IF EXISTS congress_list;
+DROP TABLE IF EXISTS constituency_characteristics;
+DROP TABLE IF EXISTS hearing_list;
+DROP TABLE IF EXISTS hearing_person;
+DROP TABLE IF EXISTS hearing_speech;
+DROP TABLE IF EXISTS legislation_list;
+DROP TABLE IF EXISTS legislation_speech;
+DROP TABLE IF EXISTS legislation_type_list;
+DROP TABLE IF EXISTS occasion_list;
+DROP TABLE IF EXISTS party_list;
+DROP TABLE IF EXISTS person_list;
+DROP TABLE IF EXISTS person_role_list;
+DROP TABLE IF EXISTS speaker_list;
+DROP TABLE IF EXISTS speech_proceeding;
+DROP TABLE IF EXISTS state_list;
+DROP TABLE IF EXISTS witness_list;
+DROP TABLE IF EXISTS zip_code_list;
