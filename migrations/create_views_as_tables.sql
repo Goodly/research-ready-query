@@ -99,8 +99,11 @@ ON advance_data_view(party_id, speech_date);
 
 CREATE INDEX IF NOT EXISTS adv_idx_state_id
 ON advance_data_view(state_id);
+                                     
+CREATE INDEX IF NOT EXISTS adv_idx_district
+ON advance_data_view(district_number);
 
-CREATE INDEX IF NOT EXISTS adv_idx_district_id
+CREATE INDEX IF NOT EXISTS adv_idx_state_district
 ON advance_data_view(state_id, district_number);
 
 -- removing tables that are no longer need for this app
